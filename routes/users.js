@@ -3,10 +3,12 @@ const User = require("../models/User");
 const bcrypt = require("bcrypt");
 
 // get a user - R
-router.get("/:id", async (req, res) => {
-  const { id } = req.params;
+router.get("/", async (req, res) => {
+  const { userId, username } = req.query;
   try {
-    const user = await User.findById(id);
+    const user = userId
+      ? await User.findById(userId)
+      : await User.findOne({ username: username });
     const { password, updatedAt, ...other } = user._doc; // any container will do, it's just for temp storage
     return res.status(200).json(other);
   } catch (err) {
