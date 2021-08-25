@@ -3,13 +3,15 @@ import Topbar from "../../components/topbar/Topbar";
 import Sidebar from "../../components/sidebar/Sidebar";
 import Feed from "../../components/feed/Feed";
 import Rightbar from "../../components/rightbar/Rightbar";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router";
+import { AuthContext } from "../../context/AuthContext";
 
 export default function Profile() {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
-  const [user, setUser] = useState({});
+  const { user: currentUser } = useContext(AuthContext);
+  const [user, setUser] = useState(currentUser);
   const username = useParams().username; // from App.js - params
 
   useEffect(() => {
@@ -52,8 +54,7 @@ export default function Profile() {
             </div>
           </div>
           <div className="profileRightBottom">
-            <Feed usernmae="john" />
-            {/* <Rightbar /> */}
+            <Feed username={username} />
             <Rightbar user={user} />
           </div>
         </div>
