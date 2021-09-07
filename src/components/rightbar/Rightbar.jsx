@@ -16,7 +16,7 @@ export default function Rightbar({ user }) {
   );
 
   useEffect(() => {
-    (async () => {
+    const getFriends = async () => {
       try {
         if (user) {
           const friendList = await axios.get("/users/friends/" + user._id); // DON'T FORGET TO PUT SLASHES BEFORE AND AFTER, spent 2 hrs :(
@@ -26,7 +26,8 @@ export default function Rightbar({ user }) {
       } catch (err) {
         console.log(err);
       }
-    })();
+    };
+    getFriends();
   }, [user, currentUser.followings]);
 
   const handleClick = async () => {

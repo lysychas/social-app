@@ -10,10 +10,15 @@ import {
 } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "./context/AuthContext";
+import Messenger from "./pages/messenger/Messenger";
 
 // TODO: wrap buttons in IconButton
 // TODO: switch to SASS OR styled-components OR Tailwind
 // TODO: add React-Router --COMPLETED
+// TODO: add Group Conversations
+// TODO: add Notifications For Messages and Posts
+// TODO: add Delete Message
+// TODO: add Block User
 
 function App() {
   const { user } = useContext(AuthContext);
@@ -26,6 +31,9 @@ function App() {
         <Route path="/login">{user ? <Redirect to="/" /> : <Login />}</Route>
         <Route path="/register">
           {user ? <Redirect to="/" /> : <Register />}
+        </Route>
+        <Route path="/messenger">
+          {!user ? <Redirect to="/" /> : <Messenger />}
         </Route>
         <Route path="/profile/:username">
           <Profile />

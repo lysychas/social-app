@@ -15,10 +15,15 @@ export default function Profile() {
   const username = useParams().username; // from App.js - params
 
   useEffect(() => {
-    (async () => {
-      const res = await axios.get(`/users?username=${username}`); // the "proxy" in package.json allows us to not write localhost:8800/api first
-      setUser(res.data);
-    })();
+    const fetchUser = async () => {
+      try {
+        const res = await axios.get(`/users?username=${username}`); // the "proxy" in package.json allows us to not write localhost:8800/api first
+        setUser(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchUser();
   }, [username]); // if you use changeables, you have to use useEffect
 
   return (

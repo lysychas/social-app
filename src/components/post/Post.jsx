@@ -19,10 +19,15 @@ export default function Post({ post }) {
   }, [currentUser._id, post.likes]);
 
   useEffect(() => {
-    (async () => {
-      const res = await axios.get(`/users?userId=${post.userId}`); // the "proxy" in package.json allows us to not write localhost:8800/api first
-      setUser(res.data);
-    })();
+    const fetchUser = async () => {
+      try {
+        const res = await axios.get(`/users?userId=${post.userId}`); // the "proxy" in package.json allows us to not write localhost:8800/api first
+        setUser(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchUser();
   }, [post.userId]); // if you use changeables, you have to use useEffect
 
   const likeHandler = () => {
